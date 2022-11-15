@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ngo_app_ui/pages/admin_homepage.dart';
+import 'package:ngo_app_ui/pages/login_screen.dart';
 
 void main() {
   runApp(const NGOApplication());
@@ -23,7 +24,7 @@ class NGOApplication extends StatelessWidget {
         ),
       ),
       title: "NGO Application",
-      home: AdminHomePage(),
+      home: LoginScreen(),
     );
   }
 }
