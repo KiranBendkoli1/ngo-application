@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class UserSearch extends StatefulWidget {
-  const UserSearch({super.key});
+class VolunteerSearch extends StatefulWidget {
+  const VolunteerSearch({super.key});
 
   @override
-  State<UserSearch> createState() => _UserSearchState();
+  State<VolunteerSearch> createState() => _VolunteerSearchState();
 }
 
-class _UserSearchState extends State<UserSearch> {
+class _VolunteerSearchState extends State<VolunteerSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,31 +60,6 @@ class _UserSearchState extends State<UserSearch> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'Category',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Person',
-                backgroundColor: Color(0xfff0b5d0b)),
-          ],
-          type: BottomNavigationBarType.shifting,
-          //currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          iconSize: 40,
-          //onTap: _onItemTapped,
-          elevation: 5),
     );
     ;
   }

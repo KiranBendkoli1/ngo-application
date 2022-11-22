@@ -247,15 +247,18 @@ class SignUpScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
-                      Text(
-                        "Have an account?",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 14,
-                          color: Color(0xff000000),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Have an account?",
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 14,
+                            color: Color(0xff000000),
+                          ),
                         ),
                       ),
                       Padding(

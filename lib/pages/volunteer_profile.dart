@@ -1,13 +1,15 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
-class UseProfile extends StatefulWidget {
-  const UseProfile({super.key});
+class VolunteerProfile extends StatefulWidget {
+  const VolunteerProfile({super.key});
 
   @override
-  State<UseProfile> createState() => _UseProfileState();
+  State<VolunteerProfile> createState() => _VolunteerProfileState();
 }
 
-class _UseProfileState extends State<UseProfile> {
+class _VolunteerProfileState extends State<VolunteerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +54,7 @@ class _UseProfileState extends State<UseProfile> {
                       ],
                       image: DecorationImage(
                         image: AssetImage(
-                          "assets/images/breakfast.jpeg",
+                          "assets/images/user.PNG",
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -244,32 +246,6 @@ class _UseProfileState extends State<UseProfile> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'Category',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Person',
-                backgroundColor: Color(0xfff0b5d0b)),
-          ],
-          type: BottomNavigationBarType.shifting,
-          //currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          iconSize: 40,
-          //onTap: _onItemTapped,
-          elevation: 5),
     );
-    ;
   }
 }

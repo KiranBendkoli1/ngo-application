@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:ngo_app_ui/pages/signup_screen.dart';
-import 'package:ngo_app_ui/pages/user_category.dart';
+import 'package:ngo_app_ui/pages/volunteer_category.dart';
 import 'package:ngo_app_ui/pages/user_homepage.dart';
 
 class LoginScreen extends StatelessWidget {

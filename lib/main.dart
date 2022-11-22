@@ -1,8 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/admin_homepage.dart';
-import 'package:ngo_app_ui/pages/login_screen.dart';
+import 'package:ngo_app_ui/pages/landing_page.dart';
 
 void main() {
   runApp(const NGOApplication());
@@ -24,7 +23,7 @@ class NGOApplication extends StatelessWidget {
         ),
       ),
       title: "NGO Application",
-      home: LoginScreen(),
+      home: LandingPage(),
     );
   }
 }

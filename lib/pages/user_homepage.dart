@@ -1,70 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:ngo_app_ui/pages/volunteer_navigation.dart';
 
 class UserHomePage extends StatelessWidget {
   const UserHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Page For Users'),
-        actions: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 8, 0),
-              child: InkWell(
-                onTap: () {},
-                child: Text(
-                  'LOGIN/SIGN',
-                  textScaleFactor: 1.5,
-                  style: TextStyle(
-                    color: Colors.white,
+        appBar: AppBar(
+          title: const Text('NGO Application'),
+          elevation: 0,
+          toolbarHeight: screenHeight / 12,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ImageSlideshow(
+                indicatorColor: Colors.blue,
+                onPageChanged: (value) {
+                  debugPrint('Page changed: $value');
+                },
+                autoPlayInterval: 5000,
+                isLoop: true,
+                children: [
+                  Image.asset(
+                    'assets/images/img1.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  Image.asset(
+                    'assets/images/img1.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                  Image.asset(
+                    'assets/images/img1.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ]),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                MaterialButton(
+                  onPressed: () {},
+                  child: Container(
+                    color: Colors.grey,
+                    child: Column(children: [
+                      Image.asset(
+                        "assets/images/donate.png",
+                        height: screenHeight / 5,
+                        width: screenHeight / 5,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      Text("Donate")
+                    ]),
                   ),
                 ),
-              ),
+                MaterialButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VolunteerNavigation(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    color: Colors.grey,
+                    child: Column(children: [
+                      Image.asset(
+                        "assets/images/volunteer.png",
+                        height: screenHeight / 5,
+                        width: screenHeight / 5,
+                        fit: BoxFit.fitWidth,
+                      ),
+                      Text("Volunteer")
+                    ]),
+                  ),
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-      body: Container(
-        child: GridView(
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                color: Colors.grey,
-                child: const Text(
-                  'FUND Donation',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                    color: Color(0xffffffff),
+            Column(
+              children: [
+                MaterialButton(
+                  onPressed: () {},
+                  color: Color(0xff0b5d0b),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.clip,
-                ),
-                margin: EdgeInsets.all(5),
-              ),
-              Container(
-                alignment: Alignment.center,
-                color: Colors.grey,
-                child: const Text(
-                  'OTHERS',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                    color: Color(0xffffffff),
+                  child: Text(
+                    "About Us",
+                    style: TextStyle(color: Colors.white),
                   ),
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.clip,
                 ),
-                margin: EdgeInsets.all(5),
-              ),
-            ]),
-      ),
-    );
+                MaterialButton(
+                  onPressed: () {},
+                  color: Color(0xff0b5d0b),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: Text(
+                    "Contact Us",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            )
+          ],
+        ));
   }
 }

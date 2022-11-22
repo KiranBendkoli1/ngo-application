@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/user_profile.dart';
-import 'package:ngo_app_ui/pages/user_search.dart';
+import 'package:ngo_app_ui/pages/volunteer_profile.dart';
+import 'package:ngo_app_ui/pages/volunteer_search.dart';
 
-class UserCategory extends StatefulWidget {
-  const UserCategory({super.key});
+class VolunteerCategory extends StatefulWidget {
+  const VolunteerCategory({super.key});
 
   @override
-  State<UserCategory> createState() => _UserCategoryState();
+  State<VolunteerCategory> createState() => _VolunteerCategoryState();
 }
 
-class _UserCategoryState extends State<UserCategory> {
+class _VolunteerCategoryState extends State<VolunteerCategory> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,31 +156,6 @@ class _UserCategoryState extends State<UserCategory> {
               ),
             ]),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'Home',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.category),
-                label: 'Category',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.search),
-                label: 'Search',
-                backgroundColor: Color(0xfff0b5d0b)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'Person',
-                backgroundColor: Color(0xfff0b5d0b)),
-          ],
-          type: BottomNavigationBarType.shifting,
-          //currentIndex: _selectedIndex,
-          selectedItemColor: Colors.black,
-          iconSize: 40,
-          //onTap: _onItemTapped,
-          elevation: 5),
     );
     ;
   }
