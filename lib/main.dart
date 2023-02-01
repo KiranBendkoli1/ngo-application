@@ -1,7 +1,7 @@
 // ignore_for_file: use_full_hex_values_for_flutter_colors, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/landing_page.dart';
+import 'package:ngo_app/pages/landing_page.dart';
 
 void main() {
   runApp(const NGOApplication());

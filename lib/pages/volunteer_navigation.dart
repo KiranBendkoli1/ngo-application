@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/volunteer_category.dart';
-import 'package:ngo_app_ui/pages/user_homepage.dart';
-import 'package:ngo_app_ui/pages/volunteer_profile.dart';
-import 'package:ngo_app_ui/pages/volunteer_search.dart';
-import 'package:ngo_app_ui/pages/volunteer_homepage.dart';
+import 'package:ngo_app/pages/volunteer_category.dart';
+import 'package:ngo_app/pages/user_homepage.dart';
+import 'package:ngo_app/pages/volunteer_profile.dart';
+import 'package:ngo_app/pages/volunteer_search.dart';
+import 'package:ngo_app/pages/volunteer_homepage.dart';
 
 class VolunteerNavigation extends StatefulWidget {
   const VolunteerNavigation({super.key});

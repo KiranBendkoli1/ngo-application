@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/volunteer_profile.dart';
-import 'package:ngo_app_ui/pages/volunteer_search.dart';
+import 'package:ngo_app/pages/volunteer_profile.dart';
+import 'package:ngo_app/pages/volunteer_search.dart';
 
 class VolunteerCategory extends StatefulWidget {
   const VolunteerCategory({super.key});

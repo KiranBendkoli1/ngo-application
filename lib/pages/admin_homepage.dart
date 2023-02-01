@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:ngo_app_ui/pages/admin_profile.dart';
-import 'package:ngo_app_ui/pages/admin_projects.dart';
-import 'package:ngo_app_ui/pages/admin_search.dart';
-import 'package:ngo_app_ui/pages/admin_volunteers.dart';
+import 'package:ngo_app/pages/admin_profile.dart';
+import 'package:ngo_app/pages/admin_projects.dart';
+import 'package:ngo_app/pages/admin_search.dart';
+import 'package:ngo_app/pages/admin_volunteers.dart';
 
 class AdminHomePage extends StatefulWidget {
   const AdminHomePage({super.key});

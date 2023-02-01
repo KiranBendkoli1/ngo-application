@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Splash extends StatelessWidget {
-  const Splash({super.key});
+class UserDonation extends StatefulWidget {
+  const UserDonation({super.key});
 
+  @override
+  State<UserDonation> createState() => _UserDonationState();
+}
+
+class _UserDonationState extends State<UserDonation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +23,7 @@ class Splash extends StatelessWidget {
                 alignment: Alignment.center,
                 color: Colors.grey,
                 child: const Text(
-                  'Donate',
+                  'Donate Money',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,
@@ -34,7 +39,7 @@ class Splash extends StatelessWidget {
                 alignment: Alignment.center,
                 color: Colors.grey,
                 child: const Text(
-                  'Volunteer',
+                  'Othwr Donations [Clothes, Books and more]',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,

@@ -1,4 +1,4 @@
-# ngo_app_ui
+# ngo_app
 
 A new Flutter project.
 

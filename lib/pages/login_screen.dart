@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/signup_screen.dart';
-import 'package:ngo_app_ui/pages/volunteer_category.dart';
-import 'package:ngo_app_ui/pages/user_homepage.dart';
+import 'package:ngo_app/pages/signup_screen.dart';
+import 'package:ngo_app/pages/volunteer_category.dart';
+import 'package:ngo_app/pages/user_homepage.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);

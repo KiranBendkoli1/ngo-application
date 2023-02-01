@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ngo_app_ui/pages/login_screen.dart';
-import 'package:ngo_app_ui/pages/signup_screen.dart';
-import 'package:ngo_app_ui/pages/user_homepage.dart';
-import 'package:ngo_app_ui/pages/volunteer_navigation.dart';
+import 'package:ngo_app/pages/login_screen.dart';
+import 'package:ngo_app/pages/signup_screen.dart';
+import 'package:ngo_app/pages/user_homepage.dart';
+import 'package:ngo_app/pages/volunteer_navigation.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -37,7 +37,14 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     Text(
                       "NGO Application",
-                      style: TextStyle(fontSize: 24),
+                      style: TextStyle(fontSize: 26),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Even the smallest contributions count",
+                      style: TextStyle(fontSize: 18),
                     )
                   ],
                 ),
