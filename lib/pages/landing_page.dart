@@ -16,6 +16,7 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
         body: Container(
       color: Colors.white,
@@ -54,7 +55,7 @@ class _LandingPageState extends State<LandingPage> {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => LoginScreen(),
@@ -84,7 +85,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => SignUpScreen(),

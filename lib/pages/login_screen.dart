@@ -1,15 +1,21 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
+import 'package:ngo_app/utils/authentication.dart';
+import 'package:ngo_app/pages/change_password.dart';
 import 'package:ngo_app/pages/signup_screen.dart';
-import 'package:ngo_app/pages/volunteer_category.dart';
-import 'package:ngo_app/pages/user_homepage.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-  static const String _title = 'Sample App';
-
+class _LoginScreenState extends State<LoginScreen> {
+  bool obText = true;
+  String email = "", password = "";
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: TextField(
-                    controller: TextEditingController(),
+                    controller: emailController,
                     obscureText: false,
                     textAlign: TextAlign.start,
                     maxLines: 1,
@@ -82,8 +88,9 @@ class LoginScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 0, 0, 16),
                   child: TextField(
-                    controller: TextEditingController(),
-                    obscureText: false,
+                    controller: passwordController,
+                    obscureText: obText,
+                    keyboardType: TextInputType.visiblePassword,
                     textAlign: TextAlign.start,
                     maxLines: 1,
                     style: TextStyle(
@@ -120,19 +127,49 @@ class LoginScreen extends StatelessWidget {
                       isDense: false,
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          if (obText) {
+                            obText = false;
+                          } else {
+                            obText = true;
+                          }
+                          setState(() {});
+                        },
+                        icon: obText
+                            ? Icon(
+                                Icons.visibility,
+                                color: Colors.grey,
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: Colors.grey,
+                              ),
+                      ),
                     ),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChangePassword(
+                            email: emailController.text,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text("forget password"),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: MaterialButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => UserHomePage()),
-                        ),
-                      );
+                      SignIn(context);
                     },
                     color: Color(0xff0b5d0b),
                     elevation: 0,
@@ -176,7 +213,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: (() {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: ((context) => SignUpScreen()),
@@ -204,5 +241,13 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void SignIn(BuildContext context) {
+    email = emailController.text;
+    password = passwordController.text;
+    setState(() {});
+    AuthenticationHelper()
+        .signIn(context: context, email: email, password: password);
   }
 }

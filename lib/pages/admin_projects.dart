@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
-import 'package:ngo_app/entities/project.dart';
 
 class AdminProjects extends StatefulWidget {
   const AdminProjects({super.key});
@@ -11,25 +10,6 @@ class AdminProjects extends StatefulWidget {
 }
 
 class _AdminProjectsState extends State<AdminProjects> {
-  // List<Project> _projects = List<Project>.filled(
-  //     500, Project("", "", "", "", "", ""),
-  //     growable: true);
-
-  // Future<List<Project>> fetchProjects() async {
-  //   var url = '';
-  //   var response = await http.get(url);
-  //   List<Project> projects = List<Project>.filled(
-  //       500, Project("", "", "", "", "", ""),
-  //       growable: true);
-  //   if (response.statusCode == 200) {
-  //     var projectsJson = json.decode(response.body);
-  //     for (var projectJson in projectsJson) {
-  //       projects.add(Project.fromJson(projectJson));
-  //     }
-  //   }
-  //   return projects;
-  // }
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

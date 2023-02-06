@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:ngo_app/utils/authentication.dart';
+import 'package:ngo_app/pages/landing_page.dart';
 import 'package:ngo_app/pages/volunteer_navigation.dart';
 import 'package:ngo_app/pages/user_donation.dart';
 
@@ -15,6 +17,19 @@ class UserHomePage extends StatelessWidget {
           title: const Text('NGO Application'),
           elevation: 0,
           toolbarHeight: screenHeight / 12,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.logout_rounded),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LandingPage(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +60,7 @@ class UserHomePage extends StatelessWidget {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => UserDonation(),
@@ -67,7 +82,7 @@ class UserHomePage extends StatelessWidget {
                 ),
                 MaterialButton(
                   onPressed: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => VolunteerNavigation(),

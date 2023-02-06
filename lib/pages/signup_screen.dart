@@ -1,24 +1,57 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:country_picker/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ngo_app/pages/login_screen.dart';
+import 'package:ngo_app/pages/user_homepage.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
-  static const String _title = 'Sample App';
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  String email = "", password = "", name = "", phoneNumber = "";
+  bool obText = true;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Country selectedCountry = Country(
+      phoneCode: "91",
+      countryCode: "IN",
+      e164Sc: 0,
+      geographic: true,
+      level: 1,
+      name: "India",
+      example: "India",
+      displayName: "India",
+      displayNameNoCountryCode: "IN",
+      e164Key: "");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
-      body: Align(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(16, 50, 16, 16),
-          child: SingleChildScrollView(
+      body: Center(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(16, 50, 16, 16),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -47,10 +80,8 @@ class SignUpScreen extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: TextField(
-                    controller: TextEditingController(),
-                    obscureText: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
+                    controller: nameController,
+                    keyboardType: TextInputType.text,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
@@ -73,7 +104,7 @@ class SignUpScreen extends StatelessWidget {
                         borderSide:
                             BorderSide(color: Color(0x00ffffff), width: 1),
                       ),
-                      hintText: "Name",
+                      hintText: "Full Name",
                       hintStyle: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -89,10 +120,8 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 TextField(
-                  controller: TextEditingController(),
-                  obscureText: false,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
@@ -130,12 +159,10 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                  padding: EdgeInsets.fromLTRB(0, 14, 0, 16),
                   child: TextField(
-                    controller: TextEditingController(),
-                    obscureText: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
+                    controller: phoneNumberController,
+                    keyboardType: TextInputType.phone,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontStyle: FontStyle.normal,
@@ -170,14 +197,31 @@ class SignUpScreen extends StatelessWidget {
                       isDense: false,
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                      prefixIcon: Container(
+                        padding: const EdgeInsets.all(15),
+                        child: InkWell(
+                          onTap: () {
+                            showCountryPicker(
+                                context: context,
+                                countryListTheme: CountryListThemeData(
+                                    bottomSheetHeight: 500),
+                                onSelect: (value) {
+                                  setState(() {
+                                    selectedCountry = value;
+                                  });
+                                });
+                          },
+                          child: Text(
+                              "${selectedCountry.flagEmoji} +${selectedCountry.phoneCode}"),
+                        ),
+                      ),
                     ),
                   ),
                 ),
                 TextField(
-                  controller: TextEditingController(),
-                  obscureText: false,
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
+                  controller: passwordController,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: obText,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontStyle: FontStyle.normal,
@@ -212,14 +256,33 @@ class SignUpScreen extends StatelessWidget {
                     isDense: false,
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    suffixIcon: Icon(Icons.visibility,
-                        color: Color(0xff9f9d9d), size: 20),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        if (obText) {
+                          obText = false;
+                        } else {
+                          obText = true;
+                        }
+                        setState(() {});
+                      },
+                      icon: obText
+                          ? Icon(
+                              Icons.visibility,
+                              color: Colors.grey,
+                            )
+                          : Icon(
+                              Icons.visibility_off,
+                              color: Colors.grey,
+                            ),
+                    ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 30, 0, 16),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      SignUp(context);
+                    },
                     color: Color(0xff0a490d),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -265,7 +328,7 @@ class SignUpScreen extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: TextButton(
                           onPressed: (() {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => LoginScreen()));
@@ -292,5 +355,45 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void SignUp(BuildContext context) async {
+    name = nameController.text;
+    email = emailController.text;
+    password = passwordController.text;
+    phoneNumber = "+${selectedCountry.phoneCode} ${phoneNumberController.text}";
+    setState(() {});
+
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = result.user;
+
+      await _firestore.collection('users').doc(user!.email).set({
+        'email': email,
+        'name': name,
+        'phoneNumber': phoneNumber,
+        'country': selectedCountry.name,
+        'time': DateTime.now()
+      }).then((value) {
+        if (user != null) {
+          Fluttertoast.showToast(
+            msg: "Successfully created account of $name",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.blueGrey,
+            fontSize: 12,
+          );
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => UserHomePage(),
+            ),
+          );
+        }
+      }).catchError((e) {
+        print(e);
+      });
+    } catch (e) {}
   }
 }
