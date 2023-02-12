@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ngo_app/pages/login_screen.dart';
 import 'package:ngo_app/pages/user_homepage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -18,8 +23,16 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  String email = "", password = "", name = "", phoneNumber = "";
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  final ImagePicker impagePicker = ImagePicker();
+  String email = "",
+      password = "",
+      name = "",
+      phoneNumber = "",
+      path = "",
+      path1 = "",
+      imageUrl = "";
+  XFile? file;
   bool obText = true;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -75,6 +88,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontStyle: FontStyle.normal,
                     fontSize: 24,
                     color: Color(0xff0f3707),
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    height: 200,
+                    width: 200,
+                    clipBehavior: Clip.hardEdge,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                    child: Padding(
+                      padding: EdgeInsets.zero,
+                      child: TextButton(
+                        style: ButtonStyle(),
+                        onPressed: () async {
+                          XFile? file = await impagePicker.pickImage(
+                              source: ImageSource.gallery);
+                          path = file!.path;
+                          final croppedFile = await ImageCropper().cropImage(
+                            sourcePath: path,
+                          );
+                          path1 = croppedFile!.path;
+                          setState(() {});
+                        },
+                        child: Container(
+                          child: path1 == ""
+                              ? Image.asset("assets/images/blankuser.png")
+                              : Image.file(File(path1)),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Padding(
@@ -368,10 +411,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-
-      await _firestore.collection('users').doc(user!.email).set({
+      Reference referenceRoot = _storage.ref();
+      Reference referenceUserImages = referenceRoot.child('images');
+      Reference imageReference =
+          referenceUserImages.child(user!.email.toString());
+      print(path1);
+      await imageReference.putFile(File(path1));
+      imageUrl = await imageReference.getDownloadURL();
+      print(imageUrl);
+      await _firestore.collection('volunteers').doc(user.email).set({
         'email': email,
         'name': name,
+        'imageUrl': imageUrl,
         'phoneNumber': phoneNumber,
         'country': selectedCountry.name,
         'time': DateTime.now()
@@ -392,7 +443,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
           );
         }
       }).catchError((e) {
-        print(e);
+        Fluttertoast.showToast(
+          msg: "Error  ${e.message}",
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.blueGrey,
+          fontSize: 12,
+        );
       });
     } catch (e) {}
   }

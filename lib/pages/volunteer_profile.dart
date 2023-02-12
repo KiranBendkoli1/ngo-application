@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class VolunteerProfile extends StatefulWidget {
@@ -10,6 +12,52 @@ class VolunteerProfile extends StatefulWidget {
 }
 
 class _VolunteerProfileState extends State<VolunteerProfile> {
+  var data,
+      name,
+      email,
+      bloodgroup,
+      dob,
+      imageUrl,
+      age,
+      gender,
+      mobile,
+      address,
+      state,
+      pincode,
+      nationality;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getVolunteersData();
+  }
+
+  void getVolunteersData() {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    final docRef =
+        _firestore.collection("volunteers").doc(_auth.currentUser?.email);
+    docRef.get().then((DocumentSnapshot doc) {
+      data = doc.data() as Map<String, dynamic>;
+      imageUrl = data['imageUrl'];
+      name = data['name'];
+      email = data['email'];
+      dob = data['Date of Birth'];
+      age = data['age'];
+      gender = data['gender'];
+      address = data['address'];
+      state = data['state'];
+      pincode = data['pincode'];
+      nationality = data['nationality'];
+
+      print(data);
+      print(email);
+    });
+
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +102,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                       ],
                       image: DecorationImage(
                         image: AssetImage(
-                          "assets/images/user.PNG",
+                          "assets/images/edu.png",
                         ),
                         fit: BoxFit.cover,
                       ),
@@ -67,7 +115,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "John Voe",
+                        "$name",
                         style: TextStyle(
                           fontSize: 16.0,
                         ),
@@ -76,7 +124,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                         height: 10.0,
                       ),
                       Text(
-                        "john123@gmail.com",
+                        "$email",
                         style: TextStyle(color: Colors.grey),
                       ),
                       SizedBox(
@@ -108,7 +156,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                     children: <Widget>[
                       ListTile(
                         leading: Icon(Icons.location_on),
-                        title: Text("City"),
+                        title: Text("${address != null ? address : 'City'}"),
                       ),
                       Divider(
                         height: 10.0,

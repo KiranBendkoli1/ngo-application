@@ -714,7 +714,7 @@ class VolunteerInfo extends StatelessWidget {
       "gender": genderData.text,
       "blood group": bloodGroupData.text,
       "email": emailData.text,
-      "mobile no.": mobileNumberData.text,
+      "mobile": mobileNumberData.text,
       "address": addressData.text,
       "state": stateData.text,
       "country": countryData.text,

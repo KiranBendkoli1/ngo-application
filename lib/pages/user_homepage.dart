@@ -21,6 +21,7 @@ class UserHomePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.logout_rounded),
               onPressed: () {
+                AuthenticationHelper().signOut();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
