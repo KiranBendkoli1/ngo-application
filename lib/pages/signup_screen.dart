@@ -426,7 +426,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'phoneNumber': phoneNumber,
         'country': selectedCountry.name,
         'time': DateTime.now()
-      }).then((value) {
+      }).then((value) async {
+        await _firestore
+            .collection('roles')
+            .doc(user.uid)
+            .set({"admin": false, "email": email});
+
         if (user != null) {
           Fluttertoast.showToast(
             msg: "Successfully created account of $name",

@@ -128,7 +128,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            //SmallButton(btnText: "Edit"),
+                            
                           ],
                         ),
                       ],

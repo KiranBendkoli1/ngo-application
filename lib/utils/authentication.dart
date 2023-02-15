@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ngo_app/model/user_model.dart';
+import 'package:ngo_app/pages/admin_homepage.dart';
 import 'package:ngo_app/pages/user_homepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -81,6 +82,7 @@ class AuthenticationHelper {
       required String email,
       required String password}) async {
     try {
+      var data;
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) => Fluttertoast.showToast(
@@ -90,10 +92,20 @@ class AuthenticationHelper {
                 backgroundColor: Colors.blueGrey,
                 fontSize: 12,
               ))
-          .then(
-            (value) => Navigator.push(context,
-                MaterialPageRoute(builder: ((context) => UserHomePage()))),
-          );
+          .then((value) {
+        final docRef =
+            _firestore.collection("roles").doc(_auth.currentUser!.uid);
+        docRef.get().then((DocumentSnapshot doc) {
+          data = doc.data() as Map<String, dynamic>;
+          if (data['admin']) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AdminHomePage()));
+          } else {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => UserHomePage()));
+          }
+        });
+      });
       return null;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(

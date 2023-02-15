@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:ngo_app/pages/login_screen.dart';
 import 'package:ngo_app/pages/signup_screen.dart';
@@ -68,6 +70,9 @@ class _LandingPageState extends State<LandingPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   padding: EdgeInsets.all(16),
+                  textColor: Color(0xffffffff),
+                  height: 40,
+                  minWidth: MediaQuery.of(context).size.width,
                   child: Text(
                     "Login",
                     style: TextStyle(
@@ -76,9 +81,6 @@ class _LandingPageState extends State<LandingPage> {
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                  textColor: Color(0xffffffff),
-                  height: 40,
-                  minWidth: MediaQuery.of(context).size.width,
                 ),
                 SizedBox(
                   height: 10,
@@ -98,6 +100,9 @@ class _LandingPageState extends State<LandingPage> {
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   padding: EdgeInsets.all(16),
+                  textColor: Color(0xffffffff),
+                  height: 40,
+                  minWidth: MediaQuery.of(context).size.width,
                   child: Text(
                     "Register",
                     style: TextStyle(
@@ -106,9 +111,6 @@ class _LandingPageState extends State<LandingPage> {
                       fontStyle: FontStyle.normal,
                     ),
                   ),
-                  textColor: Color(0xffffffff),
-                  height: 40,
-                  minWidth: MediaQuery.of(context).size.width,
                 ),
               ],
             ),

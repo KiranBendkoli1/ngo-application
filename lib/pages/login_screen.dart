@@ -16,6 +16,15 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = "", password = "";
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void SignIn(BuildContext context) {
+    email = emailController.text;
+    password = passwordController.text;
+    setState(() {});
+    AuthenticationHelper()
+        .signIn(context: context, email: email, password: password);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -241,13 +250,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  void SignIn(BuildContext context) {
-    email = emailController.text;
-    password = passwordController.text;
-    setState(() {});
-    AuthenticationHelper()
-        .signIn(context: context, email: email, password: password);
   }
 }
