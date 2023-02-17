@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +28,6 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getVolunteersData();
     super.initState();
   }
@@ -128,7 +127,6 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                             SizedBox(
                               height: 20.0,
                             ),
-                            
                           ],
                         ),
                       ],

@@ -103,11 +103,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: ButtonStyle(),
                         onPressed: () async {
                           XFile? file = await impagePicker.pickImage(
-                              source: ImageSource.gallery);
+                            source: ImageSource.gallery,
+                          );
                           path = file!.path;
                           final croppedFile = await ImageCropper().cropImage(
-                            sourcePath: path,
-                          );
+                              sourcePath: path,
+                              aspectRatio:
+                                  CropAspectRatio(ratioX: 1, ratioY: 1));
                           path1 = croppedFile!.path;
                           setState(() {});
                         },
