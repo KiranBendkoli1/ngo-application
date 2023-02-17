@@ -1,10 +1,11 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -94,83 +95,92 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Center(
-        child: Column(children: [
-          // ignore: prefer_const_constructors
-          SizedBox(
-            height: 40,
-          ),
-          changeUI
-              ? country == null
-                  ? CircularProgressIndicator()
-                  : GeoTagImage(screenHeight)
-              : TextButton(
-                  onPressed: () {
-                    getImage();
-                  },
-                  child: path1 == ""
-                      ? Column(
-                          children: [
-                            Icon(
-                              Icons.image,
-                              size: screenHeight / 3,
-                            ),
-                            Text("Select Image")
-                          ],
-                        )
-                      : Image.file(File(path1)),
-                ),
-          country == null
-              ? ElevatedButton(
-                  onPressed: () {
-                    changeUI = true;
-                    setState(() {});
-                  },
-                  child: Text("Add Location"),
-                )
-              : ElevatedButton(
-                  onPressed: () async {
-                    final screenshotController = ScreenshotController();
-                    final bytes = await screenshotController.captureFromWidget(
-                      Material(
-                        child: GeoTagImage(screenHeight),
-                      ),
-                    );
-                    setState(() {
-                      this.bytes = bytes;
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(children: [
+            // ignore: prefer_const_constructors
+            SizedBox(
+              height: 40,
+            ),
+            changeUI
+                ? country == null
+                    ? CircularProgressIndicator()
+                    : GeoTagImage(screenHeight)
+                : TextButton(
+                    onPressed: () {
+                      getImage();
+                    },
+                    child: path1 == ""
+                        ? Column(
+                            children: [
+                              Icon(
+                                Icons.image,
+                                size: screenHeight / 3,
+                              ),
+                              Text("Select Image")
+                            ],
+                          )
+                        : Image.file(File(path1)),
+                  ),
+            ElevatedButton(
+              onPressed: () {
+                changeUI = true;
+                setState(() {});
+              },
+              child: Text("Add Location"),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final screenshotController = ScreenshotController();
+                final bytes = await screenshotController.captureFromWidget(
+                  Material(
+                    child: GeoTagImage(screenWidth),
+                  ),
+                );
+                setState(() {
+                  this.bytes = bytes;
+                });
+                final geoTagImageReference =
+                    storageRef.child("geotagimages/${subLocality}");
+                try {
+                  // Upload raw data.
+                  await geoTagImageReference.putData(bytes).then((p0) {
+                    Fluttertoast.showToast(
+                      msg: "Image Uploaded",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.blueGrey,
+                      fontSize: 12,
+                    ).then((value) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AdminHomePage()));
                     });
-                    final geoTagImageReference =
-                        storageRef.child("geotagimages/${subLocality}");
-                    try {
-                      // Upload raw data.
-                      await geoTagImageReference.putData(bytes).then((p0) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AdminHomePage()));
-                      });
-                    } catch (e) {
-                      // ...
-                    }
-                  },
-                  child: Text("Upload"),
-                )
-        ]),
+                  });
+                } catch (e) {
+                  // ...
+                }
+              },
+              child: Text("Upload"),
+            )
+          ]),
+        ),
       ),
-    ));
+    );
   }
 
-  Widget GeoTagImage(screenHeight) => SingleChildScrollView(
+  Widget GeoTagImage(screenWidth) => SingleChildScrollView(
           child: Stack(
         children: [
           Image.file(
             File(path1),
-            height: screenHeight / 3,
+            width: screenWidth,
           ),
           Container(
             decoration: BoxDecoration(
-                color: Color.fromARGB(255, 78, 72, 72).withOpacity(0.5)),
+              color: Color.fromARGB(255, 78, 72, 72).withOpacity(0.5),
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
