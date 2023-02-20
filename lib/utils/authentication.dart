@@ -5,7 +5,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ngo_app/model/user_model.dart';
 import 'package:ngo_app/pages/admin_homepage.dart';
 import 'package:ngo_app/pages/user_homepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationHelper {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -20,17 +19,6 @@ class AuthenticationHelper {
 
   late UserModel _userModel;
   UserModel get userModel => _userModel;
-
-  void checkSignIn() async {
-    final SharedPreferences s = await SharedPreferences.getInstance();
-    _isSignedIn = s.getBool("is_signedin") ?? false;
-  }
-
-  void setSignIn() async {
-    final SharedPreferences s = await SharedPreferences.getInstance();
-    s.setBool('is_signedin', true);
-    _isSignedIn = true;
-  }
 
   // Sign Up Method
   Future signUp(
@@ -100,10 +88,9 @@ class AuthenticationHelper {
           if (data['admin']) {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => AdminHomePage()));
-          } else {
+          } else
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => UserHomePage()));
-          }
         });
       });
       return null;

@@ -8,6 +8,26 @@ class VolunteerHomePage extends StatefulWidget {
 }
 
 class _VolunteerHomePageState extends State<VolunteerHomePage> {
+  final List<Map<String, dynamic>> _allProj = [
+    {"id": 1, "name": "Give Directly", "address": "Nashik"},
+    {"id": 2, "name": "APOPO", "address": "Nashik"},
+    {"id": 3, "name": "charity: water", "address": "Nashik"},
+    {"id": 4, "name": " Wild4Life", "address": "Nashik"},
+    {"id": 5, "name": " ZanaLife", "address": "Nashik"},
+    {"id": 6, "name": "ColaLife", "address": "Nashik"},
+    {"id": 7, "name": "Tomike Health", "address": "Nashik"},
+    {"id": 8, "name": "UNICEF", "address": "Nashik"},
+    {"id": 9, "name": "Wikimedia Foundation", "address": "Nashik"},
+    {"id": 10, "name": "Frontline SMS", "address": "Nashik"},
+  ];
+
+  List<Map<String, dynamic>> _foundProj = [];
+  @override
+  initState() {
+    _foundProj = _allProj;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -17,138 +37,99 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
       appBar: AppBar(
         title: const Text("Welcome to the Home page"),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: screenWidth,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Schedules",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    Text("View all")
-                  ]),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: screenHeight / 5,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    elevation: 5,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 144, 231, 247)),
-                          child: Text("Location"),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 10,
+            Text(
+              "Ongoing Project",
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.normal,
+                fontSize: 24,
+                color: Color(0xff0b3005),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: screenWidth,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Viewed Projects",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    Text("View all")
-                  ]),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: screenHeight / 5,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+            Expanded(
+              child: _foundProj.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: _foundProj.length,
+                      itemBuilder: (context, index) => Card(
+                        key: ValueKey(_foundProj[index]["id"]),
+                        color: Colors.grey,
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListTile(
+                          leading: Text(
+                            _foundProj[index]["id"].toString(),
+                            style: const TextStyle(
+                                fontSize: 24, color: Colors.white),
+                          ),
+                          title: Text(_foundProj[index]['name'],
+                              style: TextStyle(color: Colors.white)),
+                          subtitle: Text(
+                              '${_foundProj[index]["address"].toString()} ',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    )
+                  : const Text(
+                      'No results found',
+                      style: TextStyle(fontSize: 24),
                     ),
-                    elevation: 5,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 144, 231, 247)),
-                          child: Text("Projects"),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 10,
+            ),
+            Text(
+              "Upcoming Project",
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.clip,
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.normal,
+                fontSize: 24,
+                color: Color(0xff0b3005),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: screenWidth,
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
-                    Text(
-                      "Posts",
-                      style: TextStyle(fontSize: 25),
-                    ),
-                    Text("View all")
-                  ]),
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: screenHeight / 5,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+            Expanded(
+              child: _foundProj.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: _foundProj.length,
+                      itemBuilder: (context, index) => Card(
+                        key: ValueKey(_foundProj[index]["id"]),
+                        color: Colors.grey,
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListTile(
+                          leading: Text(
+                            _foundProj[index]["id"].toString(),
+                            style: const TextStyle(
+                                fontSize: 24, color: Colors.white),
+                          ),
+                          title: Text(_foundProj[index]['name'],
+                              style: TextStyle(color: Colors.white)),
+                          subtitle: Text(
+                              '${_foundProj[index]["address"].toString()} ',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ),
+                    )
+                  : const Text(
+                      'No results found',
+                      style: TextStyle(fontSize: 24),
                     ),
-                    elevation: 5,
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(255, 144, 231, 247)),
-                          child: Text("Like and Share"),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                itemCount: 10,
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

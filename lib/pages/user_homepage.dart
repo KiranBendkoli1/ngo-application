@@ -14,7 +14,22 @@ class UserHomePage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          title: const Text('NGO Application'),
+          title: const Text(
+            'NGO Application',
+            style: TextStyle(color: Colors.white),
+          ),
+          flexibleSpace: Container(
+            // ignore: prefer_const_constructors
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Color(0xFF0B5D0B),
+                    Color.fromARGB(255, 20, 167, 25)
+                  ]),
+            ),
+          ),
           elevation: 0,
           toolbarHeight: screenHeight / 12,
           actions: [
@@ -32,111 +47,137 @@ class UserHomePage extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ImageSlideshow(
-                indicatorColor: Colors.blue,
-                onPageChanged: (value) {
-                  debugPrint('Page changed: $value');
-                },
-                autoPlayInterval: 5000,
-                isLoop: true,
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ImageSlideshow(
+                    indicatorColor: Colors.green,
+                    onPageChanged: (value) {
+                      debugPrint('Page changed: $value');
+                    },
+                    autoPlayInterval: 5000,
+                    isLoop: true,
+                    children: [
+                      Image.asset(
+                        'assets/images/blooddonation.png',
+                        fit: BoxFit.cover,
+                      ),
+                      Image.asset(
+                        'assets/images/computerlitracy.jpg',
+                        fit: BoxFit.cover,
+                      ),
+                      Image.asset(
+                        'assets/images/edu.png',
+                        fit: BoxFit.cover,
+                      ),
+                    ]),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Image.asset(
-                    'assets/images/img1.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                  Image.asset(
-                    'assets/images/img1.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                  Image.asset(
-                    'assets/images/img1.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ]),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UserDonation(),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UserDonation(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.grey,
                       ),
-                    );
-                  },
-                  child: Container(
-                    color: Colors.grey,
-                    child: Column(children: [
-                      Image.asset(
-                        "assets/images/donate.png",
-                        height: screenHeight / 5,
-                        width: screenHeight / 5,
-                        fit: BoxFit.fitWidth,
+                      child: Column(children: [
+                        Image.asset(
+                          "assets/images/donate.png",
+                          height: screenHeight / 5,
+                          width: screenHeight / 5,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        Text(
+                          "Donate",
+                          style:
+                              TextStyle(color: Color(0xFF0B4A0E), fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        )
+                      ]),
+                    ),
+                  ),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VolunteerNavigation(),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.grey,
                       ),
-                      Text("Donate")
-                    ]),
+                      child: Column(children: [
+                        Image.asset(
+                          "assets/images/volunteer.png",
+                          height: screenHeight / 5,
+                          width: screenHeight / 5,
+                          fit: BoxFit.fitWidth,
+                        ),
+                        Text(
+                          "Volunteer",
+                          style:
+                              TextStyle(color: Color(0xFF0B4A0E), fontSize: 18),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        )
+                      ]),
+                    ),
                   ),
-                ),
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VolunteerNavigation(),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    color: Colors.grey,
-                    child: Column(children: [
-                      Image.asset(
-                        "assets/images/volunteer.png",
-                        height: screenHeight / 5,
-                        width: screenHeight / 5,
-                        fit: BoxFit.fitWidth,
-                      ),
-                      Text("Volunteer")
-                    ]),
+                ],
+              ),
+              Column(
+                children: [
+                  MaterialButton(
+                    onPressed: () {},
+                    color: Color(0xff0b5d0b),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Text(
+                      "About Us",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                MaterialButton(
-                  onPressed: () {},
-                  color: Color(0xff0b5d0b),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
+                  MaterialButton(
+                    onPressed: () {},
+                    color: Color(0xff0b5d0b),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Text(
+                      "Contact Us",
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
-                  child: Text(
-                    "About Us",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                MaterialButton(
-                  onPressed: () {},
-                  color: Color(0xff0b5d0b),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Text(
-                    "Contact Us",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            )
-          ],
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              )
+            ],
+          ),
         ));
   }
 }

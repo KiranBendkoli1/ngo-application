@@ -43,6 +43,14 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
     image = await picker.pickImage(source: ImageSource.camera);
     final croppedFile = await ImageCropper().cropImage(
       sourcePath: image.path,
+      aspectRatioPresets: [
+        CropAspectRatioPreset.square,
+        CropAspectRatioPreset.ratio7x5,
+        CropAspectRatioPreset.ratio5x4,
+        CropAspectRatioPreset.original,
+        CropAspectRatioPreset.ratio4x3,
+        CropAspectRatioPreset.ratio16x9
+      ],
     );
     setState(() {
       path1 = croppedFile!.path;
@@ -55,7 +63,7 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
       }
     }
     Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high)
+            desiredAccuracy: LocationAccuracy.bestForNavigation)
         .then((Position position) {
       setState(() {
         _position = position;
@@ -88,7 +96,7 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
     }
   }
 
-  void getLocationInformation() async {}
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,33 +110,26 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
             SizedBox(
               height: 40,
             ),
-            changeUI
-                ? country == null
-                    ? CircularProgressIndicator()
-                    : GeoTagImage(screenHeight)
-                : TextButton(
-                    onPressed: () {
-                      getImage();
-                    },
-                    child: path1 == ""
-                        ? Column(
-                            children: [
-                              Icon(
-                                Icons.image,
-                                size: screenHeight / 3,
-                              ),
-                              Text("Select Image")
-                            ],
-                          )
-                        : Image.file(File(path1)),
-                  ),
-            ElevatedButton(
-              onPressed: () {
-                changeUI = true;
-                setState(() {});
-              },
-              child: Text("Add Location"),
-            ),
+            TextButton(
+                onPressed: () {
+                  getImage();
+                },
+                child: path1 == ""
+                    ? Column(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Container(
+                            width: screenWidth / 1.5,
+                            height: screenHeight / 3,
+                            child: Icon(Icons.camera, color: Colors.grey),
+                          ),
+                          Text("Open Camera for clicking image")
+                        ],
+                      )
+                    : country == null
+                        ? CircularProgressIndicator()
+                        : GeoTagImage(screenHeight)),
+
             ElevatedButton(
               onPressed: () async {
                 final screenshotController = ScreenshotController();
@@ -140,8 +141,8 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
                 setState(() {
                   this.bytes = bytes;
                 });
-                final geoTagImageReference =
-                    storageRef.child("geotagimages/${subLocality}");
+                final geoTagImageReference = storageRef.child(
+                    "geotagimages/${DateTime.now().millisecondsSinceEpoch}${subLocality}");
                 try {
                   // Upload raw data.
                   await geoTagImageReference.putData(bytes).then((p0) {
@@ -159,7 +160,13 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
                     });
                   });
                 } catch (e) {
-                  // ...
+                  Fluttertoast.showToast(
+                    msg: "Error Uploading image",
+                    toastLength: Toast.LENGTH_LONG,
+                    gravity: ToastGravity.BOTTOM,
+                    backgroundColor: Colors.blueGrey,
+                    fontSize: 12,
+                  );
                 }
               },
               child: Text("Upload"),

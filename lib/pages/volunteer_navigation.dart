@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
+import 'package:ngo_app/components/get_geotagged_image.dart';
 import 'package:ngo_app/pages/volunteer_category.dart';
-import 'package:ngo_app/pages/user_homepage.dart';
 import 'package:ngo_app/pages/volunteer_profile.dart';
 import 'package:ngo_app/pages/volunteer_search.dart';
 import 'package:ngo_app/pages/volunteer_homepage.dart';

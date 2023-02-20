@@ -15,7 +15,6 @@ class _VolunteerSearchState extends State<VolunteerSearch> {
         title: Text('Search'),
         leading: Icon(
           Icons.arrow_back,
-          color: Color(0xff212435),
           size: 24,
         ),
       ),

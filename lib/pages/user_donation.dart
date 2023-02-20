@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ngo_app/pages/payment_home.dart';
 
 class UserDonation extends StatefulWidget {
   const UserDonation({super.key});
@@ -12,34 +13,44 @@ class _UserDonationState extends State<UserDonation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome to the donation page"),
+        backgroundColor: Color(0xff0b3005),
+        title: const Text(
+          "Welcome to the donation page",
+          style: TextStyle(color: Color(0xffffffff)),
+        ),
       ),
       body: Container(
         child: GridView(
             gridDelegate:
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            children: <Widget>[
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  },
+                  child: Container(
+                      alignment: Alignment.center,
+                      color: Colors.grey,
+                      child: Text(
+                        'Donate Money',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16,
+                          color: Color(0xffffffff),
+                        ),
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                      ),
+                      margin: EdgeInsets.all(5))),
               Container(
                 alignment: Alignment.center,
                 color: Colors.grey,
                 child: const Text(
-                  'Donate Money',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                    color: Color(0xffffffff),
-                  ),
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.clip,
-                ),
-                margin: EdgeInsets.all(5),
-              ),
-              Container(
-                alignment: Alignment.center,
-                color: Colors.grey,
-                child: const Text(
-                  'Othwr Donations [Clothes, Books and more]',
+                  'Other Donations [Clothes, Books and more]',
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontStyle: FontStyle.normal,

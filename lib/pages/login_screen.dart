@@ -18,8 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   void SignIn(BuildContext context) {
-    email = emailController.text;
-    password = passwordController.text;
+    email = emailController.text.trim();
+    password = passwordController.text.trim();
     setState(() {});
     AuthenticationHelper()
         .signIn(context: context, email: email, password: password);
@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderSide:
                             BorderSide(color: Color(0x00ffffff), width: 1),
                       ),
-                      hintText: "Email",
+                      hintText: "Email ",
                       hintStyle: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       );
                     },
-                    child: Text("forget password"),
+                    child: Text("Forget password"),
                   ),
                 ),
                 Padding(

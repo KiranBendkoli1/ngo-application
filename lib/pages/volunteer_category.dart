@@ -17,7 +17,6 @@ class _VolunteerCategoryState extends State<VolunteerCategory> {
         title: Text('Categories'),
         leading: Icon(
           Icons.arrow_back,
-          color: Color(0xff212435),
           size: 24,
         ),
       ),

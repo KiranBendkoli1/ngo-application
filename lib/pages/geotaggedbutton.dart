@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:ngo_app/components/get_geotagged_image.dart';
 
-class AdminSearch extends StatelessWidget {
-  const AdminSearch({super.key});
+class GeoTaggedButton extends StatelessWidget {
+  const GeoTaggedButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class AdminSearch extends StatelessWidget {
     return Scaffold(
       body: Center(
           child: ElevatedButton(
-        child: Text("Get Tagging"),
+        child: Text("Get Geo Tagged Photo"),
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => GetGeoTaggedImage()));

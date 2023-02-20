@@ -29,6 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       password = "",
       name = "",
       phoneNumber = "",
+      age = "",
+      city = "",
       path = "",
       path1 = "",
       imageUrl = "";
@@ -38,6 +40,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController ageController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -103,8 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         style: ButtonStyle(),
                         onPressed: () async {
                           XFile? file = await impagePicker.pickImage(
-                            source: ImageSource.gallery,
-                          );
+                              source: ImageSource.gallery);
                           path = file!.path;
                           final croppedFile = await ImageCropper().cropImage(
                               sourcePath: path,
@@ -201,6 +204,90 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     isDense: false,
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 14, 0, 16),
+                  child: TextField(
+                    controller: ageController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      hintText: "Age",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9f9d9d),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 14, 0, 16),
+                  child: TextField(
+                    controller: cityController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      hintText: "City",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9f9d9d),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    ),
                   ),
                 ),
                 Padding(
@@ -406,6 +493,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
     name = nameController.text;
     email = emailController.text;
     password = passwordController.text;
+    age = ageController.text;
+    city = cityController.text;
     phoneNumber = "+${selectedCountry.phoneCode} ${phoneNumberController.text}";
     setState(() {});
 
@@ -427,6 +516,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'imageUrl': imageUrl,
         'phoneNumber': phoneNumber,
         'country': selectedCountry.name,
+        'age': age,
+        'city': city,
         'time': DateTime.now()
       }).then((value) async {
         await _firestore

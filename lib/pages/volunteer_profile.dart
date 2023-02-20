@@ -1,8 +1,13 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ngo_app/pages/admin_volunteerschedule.dart';
+import 'package:ngo_app/pages/login_screen.dart';
+import 'package:ngo_app/pages/volunteer_info.dart';
+import 'package:ngo_app/pages/volunteer_schedule.dart';
+import 'package:ngo_app/pages/update_schedule.dart';
 
 class VolunteerProfile extends StatefulWidget {
   const VolunteerProfile({super.key});
@@ -19,6 +24,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
       dob,
       imageUrl,
       age,
+      city,
       gender,
       mobile,
       address,
@@ -28,6 +34,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
 
   @override
   void initState() {
+    // TODO: implement initState
     getVolunteersData();
     super.initState();
   }
@@ -44,6 +51,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
       email = data['email'];
       dob = data['Date of Birth'];
       age = data['age'];
+      city = data['city'];
       gender = data['gender'];
       address = data['address'];
       state = data['state'];
@@ -60,7 +68,6 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
         title: Text('Profile'),
         leading: Icon(
           Icons.arrow_back,
-          color: Color(0xff212435),
           size: 24,
         ),
       ),
@@ -127,12 +134,47 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                             SizedBox(
                               height: 20.0,
                             ),
+                            //SmallButton(btnText: "Edit"),
                           ],
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 30.0,
+                    ),
+                    Column(
+                      children: [
+                        MaterialButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => VolunteerInfo(),
+                              ),
+                            );
+                          },
+                          color: Color(0xff0b5d0b),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: EdgeInsets.all(16),
+                          child: Text(
+                            "Edit/Add Info",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          textColor: Color(0xffffffff),
+                          height: 40,
+                          minWidth: MediaQuery.of(context).size.width,
+                        ),
+                        SizedBox(
+                          height: 6,
+                        ),
+                      ],
                     ),
                     Text(
                       "Account",
@@ -152,7 +194,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                           children: <Widget>[
                             ListTile(
                               leading: Icon(Icons.location_on),
-                              title: Text("${address ?? 'City'}"),
+                              title: Text("${city ?? 'City'}"),
                             ),
                             Divider(
                               height: 10.0,
@@ -174,14 +216,6 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                               height: 10.0,
                               color: Colors.grey,
                             ),
-                            ListTile(
-                              leading: Icon(Icons.payment),
-                              title: Text("Payment"),
-                            ),
-                            Divider(
-                              height: 10.0,
-                              color: Colors.grey,
-                            ),
                           ],
                         ),
                       ),
@@ -190,7 +224,7 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                       height: 30.0,
                     ),
                     Text(
-                      "Notifications",
+                      "Schedules",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -205,44 +239,32 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                         padding: EdgeInsets.all(16.0),
                         child: Column(
                           children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "App Notification",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => VolunteerSchedule(),
                                   ),
+                                );
+                              },
+                              color: Color(0xff0b5d0b),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              padding: EdgeInsets.all(16),
+                              child: Text(
+                                "Check Schedules",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontStyle: FontStyle.normal,
                                 ),
-                                /* Switch(
-                                   value: turnOnNotification,
-                                  onChanged: (bool value) {
-                                    // print("The value: $value");
-                                    setState(() {
-                                      turnOnNotification = value;
-                                    });
-                                  },
-                                ),*/
-                              ],
-                            ),
-                            Divider(
-                              height: 10.0,
-                              color: Colors.grey,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Location Tracking",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 10.0,
-                              color: Colors.grey,
+                              ),
+                              textColor: Color(0xffffffff),
+                              height: 40,
+                              minWidth: MediaQuery.of(context).size.width,
                             ),
                           ],
                         ),
@@ -251,43 +273,48 @@ class _VolunteerProfileState extends State<VolunteerProfile> {
                     SizedBox(
                       height: 30.0,
                     ),
-                    Text(
-                      "Other",
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20.0,
-                    ),
+
+                    /* Adding to admin page
                     Card(
+                      elevation: 3.0,
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Language",
-                                  style: TextStyle(fontSize: 16.0)),
-                              // SizedBox(height: 10.0,),
-                              Divider(
-                                height: 30.0,
-                                color: Colors.grey,
+                        child: Column(
+                          children: <Widget>[
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => UpdateSchedule(),
+                                  ),
+                                );
+                              },
+                              color: Color(0xff0b5d0b),
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                              Text("Currency",
-                                  style: TextStyle(fontSize: 16.0)),
-                              // SizedBox(height: 10.0,),
-                              Divider(
-                                height: 30.0,
-                                color: Colors.grey,
+                              padding: EdgeInsets.all(16),
+                              child: Text(
+                                "Admin Schedules",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontStyle: FontStyle.normal,
+                                ),
                               ),
-                            ],
-                          ),
+                              textColor: Color(0xffffffff),
+                              height: 40,
+                              minWidth: MediaQuery.of(context).size.width,
+                            ),
+                          ],
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: 30.0,
+                    ),*/
                   ],
                 ),
               ),
