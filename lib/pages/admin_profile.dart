@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ngo_app/components/get_geotagged_image.dart';
+import 'package:ngo_app/pages/update_schedule.dart';
 
 class AdminProfile extends StatefulWidget {
   AdminProfile({super.key});
@@ -195,21 +196,6 @@ class _AdminProfileState extends State<AdminProfile> {
                               height: 10.0,
                               color: Colors.grey,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Text(
-                                  "Location Tracking",
-                                  style: TextStyle(
-                                    fontSize: 16.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Divider(
-                              height: 10.0,
-                              color: Colors.grey,
-                            ),
                           ],
                         ),
                       ),
@@ -218,7 +204,7 @@ class _AdminProfileState extends State<AdminProfile> {
                       height: 30.0,
                     ),
                     Text(
-                      "Other",
+                      "Schedule Training",
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
@@ -233,24 +219,21 @@ class _AdminProfileState extends State<AdminProfile> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Language",
-                                  style: TextStyle(fontSize: 16.0)),
-                              // SizedBox(height: 10.0,),
-                              Divider(
-                                height: 30.0,
-                                color: Colors.grey,
-                              ),
-                              Text("Currency",
-                                  style: TextStyle(fontSize: 16.0)),
-                              // SizedBox(height: 10.0,),
-                              Divider(
-                                height: 30.0,
-                                color: Colors.grey,
-                              ),
-                            ],
-                          ),
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UpdateSchedule()));
+                                  },
+                                  child: Text("Language",
+                                      style: TextStyle(fontSize: 16.0)),
+                                ),
+                                // SizedBox(height: 10.0,),
+                              ]),
                         ),
                       ),
                     ),

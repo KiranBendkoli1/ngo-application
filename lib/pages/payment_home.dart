@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,7 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late   var _razorpay;
+  late var _razorpay;
   var amountController = TextEditingController();
 
   @override
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
               child: TextField(
                 controller: amountController,
                 decoration:
-                const InputDecoration(hintText: "Enter your Amount"),
+                    const InputDecoration(hintText: "Enter your Amount"),
               ),
             ),
             CupertinoButton(
@@ -66,22 +67,55 @@ class _HomePageState extends State<HomePage> {
                   var options = {
                     'key': "rzp_test_1SzcPrcZbeMtiS",
                     // amount will be multiple of 100
-                    'amount': (int.parse(amountController.text) * 100).toString(), //So its pay 500
+                    'amount': (int.parse(amountController.text) * 100)
+                        .toString(), //So its pay 500
                     'name': 'NGO Application',
                     'description': 'Every penny counts',
                     'timeout': 300, // in seconds
-                    'prefill': {
-                      'contact': '',
-                      'email': ''
-                    },
-                    'external': { 'wallets': ['paytm'] }
+                    'prefill': {'contact': '', 'email': ''},
+                    'external': {
+                      'wallets': ['paytm']
+                    }
                   };
                   _razorpay.open(options);
+                  _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+                      (PaymentSuccessResponse response) {
+                    String transactionId = response.paymentId.toString();
+                    String orderID = response.orderId.toString();
+                    String signature = response.signature.toString();
+
+                    // Store transaction details in Firebase database
+                    storeTransactionDetails(transactionId, orderID, signature);
+                  });
+
+                  _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+                      (PaymentFailureResponse response) {
+                    String code = response.code.toString();
+                    storeTransactionFailureDetails(code);
+                    // Handle error
+                  });
                 })
           ],
         ),
       ),
     );
+  }
+
+  void storeTransactionDetails(
+      String transactionId, String orderID, String signature) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    firestore.collection('transactions').add({
+      'transactionId': transactionId,
+      'orderId': orderID,
+      'signature': signature
+    });
+  }
+
+  void storeTransactionFailureDetails(String code) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    firestore.collection('failedtransactions').add({'code': code});
   }
 
   @override

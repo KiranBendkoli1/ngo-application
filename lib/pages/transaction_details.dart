@@ -1,7 +1,8 @@
 import 'dart:convert';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class PaymentDetailsPage extends StatefulWidget {
   final String apiKey;
@@ -24,10 +25,11 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
 
   Future<void> fetchPayments() async {
     String url = 'https://api.razorpay.com/v1/payments';
-    var response = await http.get(Uri.parse(url), headers: {
-      'Authorization':
-          'Basic ${base64.encode(utf8.encode('${widget.apiKey}:${widget.apiSecret}'))}'
-    });
+    var response = await http.get(Uri.parse(url),
+        headers: {
+          'Authorization': 'Basic ${base64.encode(
+              utf8.encode('${widget.apiKey}:${widget.apiSecret}'))}'
+        });
 
     var data = json.decode(response.body); //parses json data returned from api
     setState(() {
@@ -35,19 +37,27 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
     });
   }
 
+  void _launchRazorpayDashboard(String paymentId) async {
+    String url = 'https://dashboard.razorpay.com/app/payments/$paymentId';
+
+    if (await canLaunch(Uri.parse(url).toString())) {
+      await launch(Uri.parse(url).toString());
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Payment Details'),
-        backgroundColor: Color(0xff0b5d0b),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: DataTable(
-            //Displays table
+          child: DataTable( //Displays table
             columns: const [
               DataColumn(label: Text('Payment Id')),
               DataColumn(label: Text('Amount')),
@@ -56,24 +66,52 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
               DataColumn(label: Text('Created At')),
               DataColumn(label: Text('Status')),
             ],
-            rows: payments.map((payment) {
-              //map to iterate over list of payments
-              String paymentId = payment['id'];
-              String amount = payment['amount'].toString();
-              String email = payment['email'];
-              String contact = payment['contact'].toString();
-              String createdAt = payment['created_at'].toString();
-              String status = payment['status'];
-
-              return DataRow(cells: [
-                DataCell(Text(paymentId)),
-                DataCell(Text(amount)),
-                DataCell(Text(email)),
-                DataCell(Text(contact)),
-                DataCell(Text(createdAt)),
-                DataCell(Text(status)),
-              ]);
-            }).toList(),
+            rows: payments
+                .map(
+                  (payment) =>
+                  DataRow(
+                    cells: [
+                      DataCell(
+                        InkWell(
+                          child: Text(
+                            payment['id'],
+                            style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                          onTap: () {
+                            _launchRazorpayDashboard(payment['id']);
+                          },
+                        ),
+                      ),
+                      DataCell(
+                        Text(
+                          NumberFormat.currency(
+                            symbol: '₹',
+                          ).format(double.parse((payment['amount']/100).toString())),
+                        ),
+                      ),
+                      DataCell(
+                        Text(payment['email']),
+                      ),
+                      DataCell(
+                        Text(payment['contact'].toString()),
+                      ),
+                      DataCell(
+                        Text(
+                          DateFormat.yMMMMd().add_jm().format(
+                            DateTime.parse(payment['created_at'].toString()),
+                          ),
+                        ),
+                      ),
+                      DataCell(
+                        Text(payment['status']),
+                      ),
+                    ],
+                  ),
+            )
+                .toList(),
           ),
         ),
       ),
