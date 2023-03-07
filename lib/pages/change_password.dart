@@ -21,6 +21,18 @@ class _ChangePasswordState extends State<ChangePassword> {
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         elevation: 0,
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
         centerTitle: false,
         automaticallyImplyLeading: false,
         backgroundColor: Color(0xffffffff),

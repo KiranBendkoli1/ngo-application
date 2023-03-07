@@ -33,6 +33,18 @@ class _AdminVolunteersState extends State<AdminVolunteers> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Volunteers Page"),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: SizedBox(

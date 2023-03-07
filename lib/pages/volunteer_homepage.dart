@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ngo_app/components/add_project.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class VolunteerHomePage extends StatefulWidget {
   const VolunteerHomePage({super.key});
@@ -21,12 +23,24 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
     {"id": 10, "name": "Frontline SMS", "address": "Nashik"},
   ];
 
-  List<Map<String, dynamic>> _foundProj = [];
-  @override
-  initState() {
-    _foundProj = _allProj;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var allProjects;
+  String projectName = "";
+  void initState() {
     super.initState();
+    _foundProj = _allProj;
+    getData();
   }
+
+  Future<void> getData() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('projects').get();
+    setState(() {
+      allProjects = querySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+    print(allProjects);
+  }
+
+  List<Map<String, dynamic>> _foundProj = [];
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +50,18 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Welcome to the Home page"),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),

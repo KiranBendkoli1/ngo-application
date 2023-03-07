@@ -25,8 +25,8 @@ class UserHomePage extends StatelessWidget {
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
+                    Color(0xFF024E04),
                     Color(0xFF0B5D0B),
-                    Color.fromARGB(255, 20, 167, 25)
                   ]),
             ),
           ),
@@ -52,29 +52,29 @@ class UserHomePage extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ImageSlideshow(
-                    indicatorColor: Colors.green,
-                    onPageChanged: (value) {
-                      debugPrint('Page changed: $value');
-                    },
-                    autoPlayInterval: 5000,
-                    isLoop: true,
-                    children: [
-                      Image.asset(
-                        'assets/images/blooddonation.png',
-                        fit: BoxFit.cover,
-                      ),
-                      Image.asset(
-                        'assets/images/computerlitracy.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                      Image.asset(
-                        'assets/images/edu.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ]),
+              ImageSlideshow(
+                  indicatorColor: Colors.green,
+                  onPageChanged: (value) {
+                    debugPrint('Page changed: $value');
+                  },
+                  autoPlayInterval: 5000,
+                  isLoop: true,
+                  children: [
+                    Image.asset(
+                      'assets/images/blooddonation.png',
+                      fit: BoxFit.cover,
+                    ),
+                    Image.asset(
+                      'assets/images/computerlitracy.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    Image.asset(
+                      'assets/images/edu.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ]),
+              SizedBox(
+                height: 30,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -96,8 +96,8 @@ class UserHomePage extends StatelessWidget {
                       child: Column(children: [
                         Image.asset(
                           "assets/images/donate.png",
-                          height: screenHeight / 5,
-                          width: screenHeight / 5,
+                          height: screenWidth / 3,
+                          width: screenWidth / 3,
                           fit: BoxFit.fitWidth,
                         ),
                         Text(
@@ -128,8 +128,8 @@ class UserHomePage extends StatelessWidget {
                       child: Column(children: [
                         Image.asset(
                           "assets/images/volunteer.png",
-                          height: screenHeight / 5,
-                          width: screenHeight / 5,
+                          height: screenWidth / 3,
+                          width: screenWidth / 3,
                           fit: BoxFit.fitWidth,
                         ),
                         Text(
@@ -141,34 +141,6 @@ class UserHomePage extends StatelessWidget {
                           height: 5,
                         )
                       ]),
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  MaterialButton(
-                    onPressed: () {},
-                    color: Color(0xff0b5d0b),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Text(
-                      "About Us",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  MaterialButton(
-                    onPressed: () {},
-                    color: Color(0xff0b5d0b),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Text(
-                      "Contact Us",
-                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ],

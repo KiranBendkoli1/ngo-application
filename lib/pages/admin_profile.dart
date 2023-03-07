@@ -42,6 +42,18 @@ class _AdminProfileState extends State<AdminProfile> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Welcome Admin"),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: imageUrl == null
@@ -229,7 +241,7 @@ class _AdminProfileState extends State<AdminProfile> {
                                             builder: (context) =>
                                                 UpdateSchedule()));
                                   },
-                                  child: Text("Language",
+                                  child: Text("Schedule",
                                       style: TextStyle(fontSize: 16.0)),
                                 ),
                                 // SizedBox(height: 10.0,),

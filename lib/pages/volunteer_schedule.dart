@@ -57,6 +57,18 @@ class _VolunteerScheduleState extends State<VolunteerSchedule> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Schedules'),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
         leading: Icon(
           Icons.arrow_back,
           size: 24,

@@ -9,23 +9,39 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ngo_app/pages/admin_homepage.dart';
 
 class AddProject extends StatefulWidget {
-  const AddProject({super.key});
+  AddProject({super.key});
 
   @override
   State<AddProject> createState() => _AddProjectState();
 }
 
 class _AddProjectState extends State<AddProject> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var projectId;
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  Future<void> getData() async {
+    QuerySnapshot querySnapshot = await _firestore.collection('projects').get();
+    setState(() {
+      projectId = querySnapshot.docs.length;
+    });
+    print(projectId);
+  }
+
   final FirebaseStorage _storage = FirebaseStorage.instance;
   XFile? file;
   String projectTitle = '',
       projectDescription = '',
       projectCategory = '',
+      projectAddress = '',
       path = "",
       path1 = "",
       imageUrl = "",
       projectTeamLeader = '';
+  double projectFunds = 0.00;
   DateTime startDate = DateTime(2023);
   DateTime endDate = DateTime(2023);
   final ImagePicker impagePicker = ImagePicker();
@@ -35,11 +51,15 @@ class _AddProjectState extends State<AddProject> {
   TextEditingController projectStartDateController = TextEditingController();
   TextEditingController projectEndDateController = TextEditingController();
   TextEditingController projectCategoryController = TextEditingController();
+  TextEditingController projectFundsController = TextEditingController();
+  TextEditingController projectAddressController = TextEditingController();
   TextEditingController projectTeamLeaderController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: Color(0xffffffff),
       body: Center(
@@ -197,6 +217,132 @@ class _AddProjectState extends State<AddProject> {
                             BorderSide(color: Color(0x00ffffff), width: 1),
                       ),
                       hintText: "Project Lead",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9f9d9d),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: TextField(
+                    controller: projectFundsController,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      hintText: "Funds Allocated",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9f9d9d),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: TextField(
+                    controller: projectCategoryController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      hintText: "Category",
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.normal,
+                        fontSize: 14,
+                        color: Color(0xff9f9d9d),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xfff2f2f3),
+                      isDense: false,
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+                  child: TextField(
+                    controller: projectAddressController,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      fontSize: 14,
+                      color: Color(0xff000000),
+                    ),
+                    decoration: InputDecoration(
+                      disabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                        borderSide:
+                            BorderSide(color: Color(0x00ffffff), width: 1),
+                      ),
+                      hintText: "Address",
                       hintStyle: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
@@ -402,6 +548,7 @@ class _AddProjectState extends State<AddProject> {
       imageUrl = await imageReference.getDownloadURL();
 
       await _firestore.collection('projects').doc(projectTitle).set({
+        'projectId': projectId,
         'projectTitle': projectTitle,
         'projectDescription': projectDescription,
         'imageUrl': imageUrl,

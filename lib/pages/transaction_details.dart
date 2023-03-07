@@ -25,11 +25,10 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
 
   Future<void> fetchPayments() async {
     String url = 'https://api.razorpay.com/v1/payments';
-    var response = await http.get(Uri.parse(url),
-        headers: {
-          'Authorization': 'Basic ${base64.encode(
-              utf8.encode('${widget.apiKey}:${widget.apiSecret}'))}'
-        });
+    var response = await http.get(Uri.parse(url), headers: {
+      'Authorization':
+          'Basic ${base64.encode(utf8.encode('${widget.apiKey}:${widget.apiSecret}'))}'
+    });
 
     var data = json.decode(response.body); //parses json data returned from api
     setState(() {
@@ -52,12 +51,25 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Payment Details'),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: DataTable( //Displays table
+          child: DataTable(
+            //Displays table
             columns: const [
               DataColumn(label: Text('Payment Id')),
               DataColumn(label: Text('Amount')),
@@ -68,8 +80,7 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
             ],
             rows: payments
                 .map(
-                  (payment) =>
-                  DataRow(
+                  (payment) => DataRow(
                     cells: [
                       DataCell(
                         InkWell(
@@ -89,7 +100,8 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
                         Text(
                           NumberFormat.currency(
                             symbol: '₹',
-                          ).format(double.parse((payment['amount']/100).toString())),
+                          ).format(double.parse(
+                              (payment['amount'] / 100).toString())),
                         ),
                       ),
                       DataCell(
@@ -101,8 +113,9 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
                       DataCell(
                         Text(
                           DateFormat.yMMMMd().add_jm().format(
-                            DateTime.parse(payment['created_at'].toString()),
-                          ),
+                                DateTime.parse(
+                                    payment['created_at'].toString()),
+                              ),
                         ),
                       ),
                       DataCell(
@@ -110,7 +123,7 @@ class _PaymentDetailsPageState extends State<PaymentDetailsPage> {
                       ),
                     ],
                   ),
-            )
+                )
                 .toList(),
           ),
         ),

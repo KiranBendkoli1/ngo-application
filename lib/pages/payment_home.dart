@@ -42,8 +42,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: const CupertinoNavigationBar(
-        middle: Text("NGO Payment Gateway"),
+      appBar: AppBar(
+        title: Text(
+          "NGO Payment Gateway",
+          style: TextStyle(color: Colors.white),
+        ),
+        flexibleSpace: Container(
+          // ignore: prefer_const_constructors
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xFF024E04),
+                  Color(0xFF0B5D0B),
+                ]),
+          ),
+        ),
+        elevation: 0,
       ),
       body: Container(
         height: size.height,
@@ -59,9 +75,17 @@ class _HomePageState extends State<HomePage> {
                     const InputDecoration(hintText: "Enter your Amount"),
               ),
             ),
-            CupertinoButton(
-                color: Colors.green,
-                child: Text("Pay Amount"),
+            MaterialButton(
+                color: Color(0xff0b5d0b),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  "Pay Amount",
+                  style: TextStyle(color: Colors.white),
+                ),
                 onPressed: () {
                   ///Make payment
                   var options = {

@@ -19,8 +19,9 @@ class _AdminHomePageState extends State<AdminHomePage> {
     List<Widget> pages = <Widget>[
       AdminProjects(),
       PaymentDetailsPage(
-          apiKey: 'rzp_test_1SzcPrcZbeMtiS',
-          apiSecret: 'NTzmUZAjCwWcy0RS6s94Jxd6'),
+        apiKey: 'rzp_test_1SzcPrcZbeMtiS',
+        apiSecret: 'NTzmUZAjCwWcy0RS6s94Jxd6',
+      ),
       AdminVolunteers(),
       AdminProfile()
     ];
