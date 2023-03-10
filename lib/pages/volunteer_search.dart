@@ -16,6 +16,7 @@ class _VolunteerSearchState extends State<VolunteerSearch> {
         flexibleSpace: Container(
           // ignore: prefer_const_constructors
           decoration: BoxDecoration(
+            // ignore: prefer_const_constructors
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
@@ -25,6 +26,7 @@ class _VolunteerSearchState extends State<VolunteerSearch> {
                 ]),
           ),
         ),
+        // ignore: prefer_const_constructors
         leading: Icon(
           Icons.arrow_back,
           size: 24,
@@ -39,7 +41,7 @@ class _VolunteerSearchState extends State<VolunteerSearch> {
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-                hintText: "Search by Loaction",
+                hintText: "Search by Location",
                 suffixIcon: const Icon(Icons.location_city),
                 // prefix: Icon(Icons.search),
                 border: OutlineInputBorder(
@@ -72,6 +74,5 @@ class _VolunteerSearchState extends State<VolunteerSearch> {
         ),
       ),
     );
-    ;
   }
 }

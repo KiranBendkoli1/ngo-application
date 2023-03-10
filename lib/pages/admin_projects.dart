@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:ngo_app/components/add_project.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ngo_app/model/project_model.dart';
+import 'package:ngo_app/pages/admin_project_info.dart';
 import 'package:ngo_app/pages/login_screen.dart';
 import 'package:ngo_app/utils/authentication.dart';
 
@@ -127,37 +129,66 @@ class _AdminProjectsState extends State<AdminProjects> {
                               var data = snapshots.data!.docs[index].data()
                                   as Map<String, dynamic>;
                               if (projectName.isEmpty) {
+                                ProjectModel currentProject = ProjectModel(
+                                    projectId: data['projectId'],
+                                    projectTitle: data['projectTitle'],
+                                    projectDescription:
+                                        data['projectDescription'],
+                                    projectAddress: data['projectAddress'],
+                                    imageUrl: data['imageUrl'],
+                                    projectFunds: data['projectFunds'],
+                                    projectTeamLeader:
+                                        data['projectTeamLeader'],
+                                    projectCategory: data['projectCategory'],
+                                    startDate: data['startDate'],
+                                    endDate: data['endDate']);
                                 return (data['imageUrl'] == null)
                                     ? Center(
                                         child: CircularProgressIndicator(),
                                       )
-                                    : Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
+                                    : TextButton(
+                                        style: ButtonStyle(
+                                          padding: MaterialStatePropertyAll(
+                                              EdgeInsets.all(0)),
                                         ),
-                                        elevation: 5,
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        child: Column(
-                                          children: [
-                                            data['imageUrl'] == null
-                                                ? Center(
-                                                    child:
-                                                        CircularProgressIndicator(),
-                                                  )
-                                                : Image.network(
-                                                    data['imageUrl'],
-                                                    height: screenHeight / 6,
-                                                    colorBlendMode:
-                                                        BlendMode.colorBurn,
-                                                  ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white),
-                                              child: Text(data['projectTitle']),
-                                            )
-                                          ],
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      AdminProjectInfo(
+                                                          projectModel:
+                                                              currentProject)));
+                                        },
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          elevation: 5,
+                                          clipBehavior:
+                                              Clip.antiAliasWithSaveLayer,
+                                          child: Column(
+                                            children: [
+                                              data['imageUrl'] == null
+                                                  ? Center(
+                                                      child:
+                                                          CircularProgressIndicator(),
+                                                    )
+                                                  : Image.network(
+                                                      data['imageUrl'],
+                                                      height: screenHeight / 6,
+                                                      colorBlendMode:
+                                                          BlendMode.colorBurn,
+                                                    ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white),
+                                                child:
+                                                    Text(data['projectTitle']),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
                               }

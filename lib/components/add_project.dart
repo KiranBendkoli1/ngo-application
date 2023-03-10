@@ -41,7 +41,7 @@ class _AddProjectState extends State<AddProject> {
       path1 = "",
       imageUrl = "",
       projectTeamLeader = '';
-  double projectFunds = 0.00;
+  int projectFunds = 0;
   DateTime startDate = DateTime(2023);
   DateTime endDate = DateTime(2023);
   final ImagePicker impagePicker = ImagePicker();
@@ -537,6 +537,8 @@ class _AddProjectState extends State<AddProject> {
     projectDescription = projectDescriptionController.text;
     projectTeamLeader = projectTeamLeaderController.text;
     projectCategory = projectCategoryController.text;
+    projectAddress = projectAddressController.text;
+    projectFunds = int.parse(projectFundsController.text);
     var startDate = projectStartDateController.text;
     var endDate = projectEndDateController.text;
     setState(() {});
@@ -554,6 +556,8 @@ class _AddProjectState extends State<AddProject> {
         'imageUrl': imageUrl,
         'projectTeamLeader': projectTeamLeader,
         'projectCategory': projectCategory,
+        'projectAddress': projectAddress,
+        'projectFunds': projectFunds,
         'startDate': startDate,
         'endDate': endDate
       }).then((value) {

@@ -1,17 +1,18 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names
 
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'dart:io';
 
+import 'package:ngo_app/pages/admin_homepage.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:ngo_app/pages/admin_homepage.dart';
 import 'package:screenshot/screenshot.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GetGeoTaggedImage extends StatefulWidget {
   const GetGeoTaggedImage({super.key});
@@ -95,8 +96,6 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
       print(e);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -185,40 +184,46 @@ class GetGeoTaggedImageState extends State<GetGeoTaggedImage> {
             width: screenWidth,
           ),
           Container(
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 78, 72, 72).withOpacity(0.5),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _address,
-                  style: TextStyle(color: Colors.white),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 78, 72, 72).withOpacity(0.5),
+              ),
+              child: Row(children: [
+                GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(latitude, longitude),
+                  ),
                 ),
-                Text(
-                  "$street, $subLocality",
-                  style: TextStyle(color: Colors.white),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _address,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      "$street, $subLocality",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      "$locality, $administrativeArea $postalCode, $country",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      "Latitude $latitude",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      "Longitude $longitude",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    Text(
+                      _datetime,
+                      style: TextStyle(color: Colors.white),
+                    )
+                  ],
                 ),
-                Text(
-                  "$locality, $administrativeArea $postalCode, $country",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text(
-                  "Latitude $latitude",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text(
-                  "Longitude $longitude",
-                  style: TextStyle(color: Colors.white),
-                ),
-                Text(
-                  _datetime,
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
-          ),
+              ])),
         ],
       ));
 }

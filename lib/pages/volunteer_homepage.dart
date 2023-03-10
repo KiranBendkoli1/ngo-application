@@ -28,8 +28,8 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
   String projectName = "";
   void initState() {
     super.initState();
-    _foundProj = _allProj;
     getData();
+    allProjects = allProjects;
   }
 
   Future<void> getData() async {
@@ -39,8 +39,6 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
     });
     print(allProjects);
   }
-
-  List<Map<String, dynamic>> _foundProj = [];
 
   @override
   Widget build(BuildContext context) {
@@ -85,33 +83,31 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
               height: 20,
             ),
             Expanded(
-              child: _foundProj.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: _foundProj.length,
-                      itemBuilder: (context, index) => Card(
-                        key: ValueKey(_foundProj[index]["id"]),
-                        color: Colors.grey,
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: ListTile(
-                          leading: Text(
-                            _foundProj[index]["id"].toString(),
-                            style: const TextStyle(
-                                fontSize: 24, color: Colors.white),
+                child: allProjects == null
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        itemCount: allProjects.length,
+                        itemBuilder: (context, index) => Card(
+                          key: ValueKey(allProjects[index]["projectId"]),
+                          color: Colors.grey,
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: ListTile(
+                            leading: Text(
+                              allProjects[index]["projectId"].toString(),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white),
+                            ),
+                            title: Text(allProjects[index]['projectTitle'],
+                                style: TextStyle(color: Colors.white)),
+                            subtitle: Text(
+                                allProjects[index]["projectAddress"].toString(),
+                                style: TextStyle(color: Colors.white)),
                           ),
-                          title: Text(_foundProj[index]['name'],
-                              style: TextStyle(color: Colors.white)),
-                          subtitle: Text(
-                              '${_foundProj[index]["address"].toString()} ',
-                              style: TextStyle(color: Colors.white)),
                         ),
-                      ),
-                    )
-                  : const Text(
-                      'No results found',
-                      style: TextStyle(fontSize: 24),
-                    ),
-            ),
+                      )),
             Text(
               "Upcoming Project",
               textAlign: TextAlign.start,
@@ -127,33 +123,31 @@ class _VolunteerHomePageState extends State<VolunteerHomePage> {
               height: 20,
             ),
             Expanded(
-              child: _foundProj.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: _foundProj.length,
-                      itemBuilder: (context, index) => Card(
-                        key: ValueKey(_foundProj[index]["id"]),
-                        color: Colors.grey,
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: ListTile(
-                          leading: Text(
-                            _foundProj[index]["id"].toString(),
-                            style: const TextStyle(
-                                fontSize: 24, color: Colors.white),
+                child: allProjects == null
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView.builder(
+                        itemCount: allProjects.length,
+                        itemBuilder: (context, index) => Card(
+                          key: ValueKey(allProjects[index]["projectId"]),
+                          color: Colors.grey,
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: ListTile(
+                            leading: Text(
+                              allProjects[index]["projectId"].toString(),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white),
+                            ),
+                            title: Text(allProjects[index]['projectTitle'],
+                                style: TextStyle(color: Colors.white)),
+                            subtitle: Text(
+                                '${allProjects[index]["projectAddress"].toString()} ',
+                                style: TextStyle(color: Colors.white)),
                           ),
-                          title: Text(_foundProj[index]['name'],
-                              style: TextStyle(color: Colors.white)),
-                          subtitle: Text(
-                              '${_foundProj[index]["address"].toString()} ',
-                              style: TextStyle(color: Colors.white)),
                         ),
-                      ),
-                    )
-                  : const Text(
-                      'No results found',
-                      style: TextStyle(fontSize: 24),
-                    ),
-            ),
+                      )),
           ],
         ),
       ),
